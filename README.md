@@ -1,4 +1,4 @@
-# NexoPro connector for PHP
+# Nexo Pro connector for PHP
 
 ## Install using composer ##
 
@@ -14,14 +14,14 @@ Set your API KEY and API SECRET in the .env file.
 ## Basic usage ##
 
 ### Get account balances ###
-$balances = NexoPro::getAccountSummary();
+	$balances = NexoPro::getAccountSummary();
 
 ### Get pair quote ###
-$quote = NexoPro::getQuote(
-	pair: 'BTC/USDT',
-	amount: 0.001,
-	side: 'buy'
-);
+	$quote = NexoPro::getQuote(
+		pair: 'BTC/USDT',
+		amount: 0.001,
+		side: 'buy'
+	);
 
 ---
 

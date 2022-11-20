@@ -25,9 +25,20 @@ class NexoPro
 
     ## Orders
 
-    static function placeOrder(String $pair, Float $amount, String $side, String $type, Float $price = null)
+    static function placeOrder(
+        String $pair,
+        String $side,
+        String $type,
+        Float $amount,
+        Float $price = null)
     {
         return self::request('orders', ['POST' => compact('pair', 'amount', 'side', 'type', 'price')]);
+    }
+
+    static function getOrder(
+        String $id
+    ){
+        return self::request('orderDetails', ['GET' => compact('id')]);
     }
 
     static function placeTriggerOrder(String $pair, Float $amount, String $side, Float $price,
@@ -63,11 +74,11 @@ class NexoPro
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
         // curl_setopt($ch, CURLINFO_HEADER_OUT, true);
         // curl_setopt($ch, CURLOPT_HEADER, true);
-        $result = curl_exec($ch);
-        if (!$result) {
+        $json = curl_exec($ch);
+        if (!$json) {
             return curl_getinfo($ch);
         }
-        return $result;
+        return json_decode($json, true);
     }
 
     function requestHeaders()
