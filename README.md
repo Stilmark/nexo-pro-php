@@ -13,7 +13,15 @@ Set your API KEY and API SECRET in the .env file.
 
 ## Basic usage ##
 
+### Get account balances ###
 $balances = NexoPro::getAccountSummary();
+
+### Get pair quote ###
+$quote = NexoPro::getQuote(
+	pair: 'BTC/USDT',
+	amount: 0.001,
+	side: 'buy'
+);
 
 ---
 
