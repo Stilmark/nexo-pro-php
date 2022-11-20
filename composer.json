@@ -1,0 +1,22 @@
+{
+    "name": "stilmark/nexo-pro-php",
+    "description": "PHP wrapper for Nexo Pro API.",
+    "type": "package",
+    "require": {
+        "php": ">=7",
+        "symfony/dotenv": "*",
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christian Lund",
+            "email": "clund@stilmark.com",
+            "homepage": "http://stilmark.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Stilmark\\Crypto\\": "src/"
+        }
+    }
+}
