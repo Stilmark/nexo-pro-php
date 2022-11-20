@@ -4,28 +4,13 @@
 
     composer require stilmark/nexo-pro-php
 
-Set your API KEY and API SECRET in the .env file.
+## Documetation ##
 
-	NEXOPRO_API_URL=pro-api.prime-nexo.net
-	NEXOPRO_API_VERSION=v1
-	NEXOPRO_API_KEY=[YOUR_API_KEY]
-	NEXOPRO_API_SECRET=[YOUR_API_SECRET]
-
-## Basic usage ##
-
-### Get account balances ###
-	$balances = NexoPro::getAccountSummary();
-
-### Get pair quote ###
-	$quote = NexoPro::getQuote(
-		pair: 'BTC/USDT',
-		amount: 0.001,
-		side: 'buy'
-	);
+https://stilmark-1.gitbook.io/nexo-pro-connector-for-php/
 
 ---
 
-Inspired by NexoPro connectors for:
+Inspired by Nexo Pro connector projects:
 
 TypeScript/Node.js : https://github.com/aussedatlo/nexo-pro
 
