@@ -8,10 +8,25 @@
 
 https://stilmark-1.gitbook.io/nexo-pro-connector-for-php/
 
----
+### Supported methods ###
 
-Inspired by Nexo Pro connector projects:
+**Portfolio**
+- getAccountSummary
+- getPairs
+- getQuote
 
-TypeScript/Node.js : https://github.com/aussedatlo/nexo-pro
+**Orders**
+- placeOrder
+- placeAdvancedOrder
+- placeTriggerOrder
+- getOrder
+- cancelOrder
+- cancelAllOrders
 
-Python : https://github.com/guilyx/python-nexo
+**History**
+- getOrderHistory
+- getTradeHistory
+
+**Transaction**
+- getTransaction
+
