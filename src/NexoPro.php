@@ -17,9 +17,9 @@ class NexoPro
     }
 
     static function getQuote(
-        String $pair,
-        String $side,
-        Float $amount
+        String $pair = 'BTC/USDT',
+        String $side = 'buy',
+        Float $amount = 1
     ){
         $param = [
         'GET' => compact(
