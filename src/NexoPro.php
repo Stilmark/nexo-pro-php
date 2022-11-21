@@ -36,8 +36,8 @@ class NexoPro
         String $side,
         String $type,
         Float $amount,
-        Float $price = null)
-    {
+        Float $price = null
+    ){
         $param = [
         'POST' => compact(
             'pair',
@@ -47,6 +47,48 @@ class NexoPro
             'price'
         )];
         return self::request('orders', $param);
+    }
+
+    static function placeAdvancedOrder(
+        String $pair,
+        String $side,
+        Float $amount,
+        Float $stopLossPrice,
+        Float $takeProfitPrice
+    ){
+        $param = [
+        'POST' => compact(
+            'pair',
+            'side',
+            'amount',
+            'stopLossPrice',
+            'takeProfitPrice'
+        )];
+        return self::request('orders/advanced', $param);
+    }
+
+    static function placeTriggerOrder(
+        String $pair,
+        Float $amount,
+        String $side,
+        Float $price,
+        String $triggerType,
+        Float $triggerPrice,
+        Float $trailingDistance = null,
+        Float $trailingPercentage = null
+    ){
+        $param = [
+        'POST' => compact(
+            'pair',
+            'amount',
+            'side',
+            'price',
+            'triggerType',
+            'triggerPrice',
+            'trailingDistance',
+            'trailingPercentage',
+        )];
+        return self::request('orders/trigger', $param);
     }
 
     static function getOrder(
@@ -59,11 +101,37 @@ class NexoPro
         return self::request('orderDetails', $param);
     }
 
+    ## Transaction
+
+    static function getTransaction(
+        String $transactionId
+    ){
+        $param = [
+        'GET' => compact(
+            'transactionId'
+        )];
+        return self::request('trasaction', $param);
+    }
+
+    ## Cancel
+
+    static function cancelOrder(String $orderId)
+    {
+        return self::request('orders/cancel', ['POST' => compact('orderId')]);
+    }
+
+    static function cancelAllOrders(String $pair)
+    {
+        return self::request('orders/cancel', ['POST' => compact('pair')]);
+    }
+
+    ## History
+
     static function getOrderHistory(
         Array $pairs = ['BTC/USDT'],
         String $startDate = 'yesterday',
         String $endDate = 'today',
-        Int $pageSize = 10,
+        Int $pageSize = 50,
         Int $pageNumber =0
     ){
         $startDate = strtotime($startDate);
@@ -84,7 +152,7 @@ class NexoPro
         Array $pairs = ['BTC/USDT'],
         String $startDate = 'yesterday',
         String $endDate = 'today',
-        Int $pageSize = 10,
+        Int $pageSize = 50,
         Int $pageNumber = 0
     ){
         $startDate = strtotime($startDate);
@@ -102,29 +170,25 @@ class NexoPro
     }
 
 
-    static function placeTriggerOrder(String $pair, Float $amount, String $side, Float $price,
-                String $triggerType, Float $triggerPrice, Float $trailingDistance, Float $trailingPercentage)
-    {
-        return self::request('orders/trigger', ['POST' => compact('pair', 'amount', 'side', 'type', 'price')]);
-    }
-
-    static function cancelOrder(String $orderId)
-    {
-        return self::request('orders/cancel', ['POST' => compact('orderId')]);
-    }
-
-    static function cancelAllOrders(String $pair)
-    {
-        return self::request('orders/cancel', ['POST' => compact('pair')]);
-    }
+    ## Request
 
     static function request($method, $params = [])
     {
         $client = new NexoPro();
         $apiUrl = 'https://'.$_ENV['NEXOPRO_API_URL'].'/api/'.$_ENV['NEXOPRO_API_VERSION'].'/'.$method;
 
+        $requestParams = $client->validateParams(current($params));
+        if (isset($requestParams['error'])) {
+            return $requestParams;
+        }
+
         if (count($params)) {
             if (key($params) == 'GET') {
+                foreach($params['GET'] AS $key => $param) {
+                    if (is_array($param)) {
+                        $params['GET'][$key] = implode(',', $param);
+                    }
+                }
                 $apiUrl .= '?'.http_build_query($params['GET']);
             }
         }
@@ -132,10 +196,7 @@ class NexoPro
         $ch = curl_init( $apiUrl );
         curl_setopt($ch, CURLOPT_HTTPHEADER, $client->requestHeaders());
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
-        // curl_setopt($ch, CURLINFO_HEADER_OUT, true);
-        // curl_setopt($ch, CURLOPT_HEADER, true);
         $json = curl_exec($ch);
-        // $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         return json_decode($json, true);
     }
 
@@ -154,6 +215,21 @@ class NexoPro
         ];
 
         return $headers;
+    }
+
+    function validateParams($params)
+    {
+        $side = ['buy', 'sell'];
+        $type = ['market', 'limit'];
+
+        if (isset($params['side']) && !in_array($params['side'], $side)) {
+            return ['error' => 'Invalid side option', 'Side options' => $side];
+        }
+        if (isset($params['type']) && !in_array($params['type'], $type)) {
+            return ['error' => 'Invalid type option', 'Type options' => $type];
+        }
+
+        return true;
     }
 
 }
