@@ -5,6 +5,7 @@ namespace Stilmark\Crypto;
 class NexoPro
 {
 
+    ## Portfolio
     static function getAccountSummary()
     {
         return self::request('accountSummary');
@@ -20,11 +21,16 @@ class NexoPro
         String $side,
         Float $amount
     ){
-        return self::request('quote', ['GET' => compact('pair', 'amount', 'side')]);
+        $param = [
+        'GET' => compact(
+            'pair',
+            'amount',
+            'side'
+        )];
+        return self::request('quote', $param);
     }
 
     ## Orders
-
     static function placeOrder(
         String $pair,
         String $side,
@@ -32,14 +38,69 @@ class NexoPro
         Float $amount,
         Float $price = null)
     {
-        return self::request('orders', ['POST' => compact('pair', 'amount', 'side', 'type', 'price')]);
+        $param = [
+        'POST' => compact(
+            'pair',
+            'amount',
+            'side',
+            'type',
+            'price'
+        )];
+        return self::request('orders', $param);
     }
 
     static function getOrder(
         String $id
     ){
-        return self::request('orderDetails', ['GET' => compact('id')]);
+        $param = [
+        'GET' => compact(
+            'id'
+        )];
+        return self::request('orderDetails', $param);
     }
+
+    static function getOrderHistory(
+        Array $pairs = ['BTC/USDT'],
+        String $startDate = 'yesterday',
+        String $endDate = 'today',
+        Int $pageSize = 10,
+        Int $pageNumber =0
+    ){
+        $startDate = strtotime($startDate);
+        $endDate = strtotime($endDate);
+        $pageNum = 0;
+        $param = [
+        'GET' => compact(
+            'pairs',
+            'startDate',
+            'endDate',
+            'pageSize',
+            'pageNum'
+        )];
+        return self::request('orders', $param);
+    }
+
+    static function getTradeHistory(
+        Array $pairs = ['BTC/USDT'],
+        String $startDate = 'yesterday',
+        String $endDate = 'today',
+        Int $pageSize = 10,
+        Int $pageNumber = 0
+    ){
+        $startDate = strtotime($startDate);
+        $endDate = strtotime($endDate);
+        $pageNum = $pageNumber;
+        $param = [
+        'GET' => compact(
+            'pairs',
+            'startDate',
+            'endDate',
+            'pageSize',
+            'pageNum'
+        )];
+        return self::request('trades', $param);
+    }
+
 
     static function placeTriggerOrder(String $pair, Float $amount, String $side, Float $price,
                 String $triggerType, Float $triggerPrice, Float $trailingDistance, Float $trailingPercentage)
@@ -56,7 +117,6 @@ class NexoPro
     {
         return self::request('orders/cancel', ['POST' => compact('pair')]);
     }
-
 
     static function request($method, $params = [])
     {
@@ -75,9 +135,7 @@ class NexoPro
         // curl_setopt($ch, CURLINFO_HEADER_OUT, true);
         // curl_setopt($ch, CURLOPT_HEADER, true);
         $json = curl_exec($ch);
-        if (!$json) {
-            return curl_getinfo($ch);
-        }
+        // $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         return json_decode($json, true);
     }
 
