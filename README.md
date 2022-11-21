@@ -6,7 +6,7 @@
 
 ## Documetation ##
 
-https://stilmark-1.gitbook.io/nexo-pro-connector-for-php/
+https://stilmark-projects.gitbook.io/nexo-pro-for-php/
 
 ### Supported methods ###
 
