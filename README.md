@@ -37,16 +37,15 @@ https://stilmark-projects.gitbook.io/nexo-pro-for-php/
 **Transaction**
 - getTransaction
 
-## Support this project ##
+## :blue_book: Documentation ##
 
-**$BTC:** 1e1C89CNZAGX8eyoHeQuBb32HSLC7idMo
+https://stilmark-projects.gitbook.io/database
 
-**$DOT:** 1kmH8qHKp8E4aDpoFqD9rn4NKadoGhVFiEvdp7najZZT165
+## Sponsor this project with a :coffee: or a :croissant: ##
 
-**$BNB:** bnb15ga5xt2rjnz8ptv63j6nys674n56eknsxp2w7w
+**$BTC:** `1e1C89CNZAGX8eyoHeQuBb32HSLC7idMo`
 
-**$LINK:** 0x8FB377c6770BBaa1303db85f5188375Bd633E149
+**$DOT:** `1kmH8qHKp8E4aDpoFqD9rn4NKadoGhVFiEvdp7najZZT165`
 
-**$USDT:** 0x8FB377c6770BBaa1303db85f5188375Bd633E149
+**$USDT:** `0x8FB377c6770BBaa1303db85f5188375Bd633E149`
 
-**$USDC:** 0x8FB377c6770BBaa1303db85f5188375Bd633E149
