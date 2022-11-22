@@ -11,7 +11,7 @@ Wrapper for the Nexo Pro exchange API
 
     composer require stilmark/nexo-pro-php
 
-## Documetation ##
+## :blue_book: Documentation ##
 
 https://stilmark-projects.gitbook.io/nexo-pro-for-php/
 
@@ -37,9 +37,6 @@ https://stilmark-projects.gitbook.io/nexo-pro-for-php/
 **Transaction**
 - getTransaction
 
-## :blue_book: Documentation ##
-
-https://stilmark-projects.gitbook.io/database
 
 ## Sponsor this project with a :coffee: or a :croissant: ##
 
